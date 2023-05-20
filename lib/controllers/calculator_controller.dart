@@ -1,70 +1,90 @@
-// ignore_for_file: unnecessary_null_comparison
-
+import 'package:calculator/models/calculate_data.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:intl/intl.dart';
 
 class CalculatorController extends ChangeNotifier {
-  List<String> listNumbers = [];
-  List<String> listOperators = [];
-  final List<int?> _listaTotal = [];
-  String? selectedOperator;
-  int? selectedNumber = 0;
+  String display = '0';
   double total = 0;
+  String? _operator;
+  bool _isOperatorClicked = false;
 
-  addOperator(String op) {
-    listOperators.add(op);
-    _listaTotal.add(selectedNumber);
-    listNumbers.clear();
-    selectedNumber = 0;
-    notifyListeners();
-  }
+  List<CalculateData> model = <CalculateData>[];
 
-  addNumber(String number) {
-    listNumbers.add(number);
-
-    String numbersAgrouped = listNumbers.join('');
-
-    selectedNumber = int.parse(numbersAgrouped);
-    notifyListeners();
-  }
-
-  double doSum() {
-    if (listOperators.length > 1) {
-      double? newNumber = double.parse(listNumbers.join(''));
-
-      total += newNumber;
-      _listaTotal.add(total.toInt());
-      return total;
+  void addNumber(String text) {
+    if (display == '0' || _isOperatorClicked) {
+      display = text;
+      _isOperatorClicked = false;
     } else {
-      double sum = 0;
-      double oldOp = double.parse(_listaTotal.join(''));
-
-      sum = selectedNumber! + oldOp;
-      total = sum;
-      _listaTotal.add(total.toInt());
-
-      return total;
+      display += text;
     }
-    // return total;
+    notifyListeners();
   }
 
-  verifyOperator(String op) {
-    switch (op) {
-      case '+':
-        // total = null;
-        doSum();
-        selectedNumber = null;
-        // print('its sum');
-        break;
-      default:
+  void addOperator(String operator) {
+    if (_operator != null) {
+      calculateResult();
     }
+    total = double.parse(display);
+    display = '0';
+    _operator = operator;
+    _isOperatorClicked = true;
+    notifyListeners();
   }
 
-  getResult() async {
-    if (listNumbers.isNotEmpty && listOperators.isNotEmpty) {
-      for (var op in listOperators) {
-        await verifyOperator(op);
-        notifyListeners();
-      }
+  void resetInputs() {
+    display = '0';
+    total = 0;
+    _operator = null;
+    _isOperatorClicked = false;
+    model.clear();
+    notifyListeners();
+  }
+
+  void calculateResult() {
+    double currentNum = double.parse(display);
+    double previousNum = total;
+    double? newTotal;
+
+    if (_operator == '+') {
+      newTotal = previousNum + currentNum;
+    } else if (_operator == '-') {
+      newTotal = previousNum - currentNum;
+    } else if (_operator == 'x') {
+      newTotal = previousNum * currentNum;
+    } else if (_operator == '/') {
+      newTotal = previousNum / currentNum;
     }
+
+    total = newTotal!;
+    display = total.toString();
+
+    getTimeNow(previousNum, currentNum);
+    notifyListeners();
+  }
+
+  void getTimeNow(double previousNum, double currentNum) {
+    DateTime dateNow = DateTime.now();
+    DateTime today = DateTime.now().toLocal();
+
+    DateFormat format = DateFormat('EEEE', 'pt-BR');
+
+    String day = format.format(dateNow);
+    String hour = DateFormat('h:mm a').format(dateNow);
+
+    String history = '$previousNum $_operator $currentNum =\n $display';
+
+    if (dateNow.year == today.year &&
+        dateNow.month == today.month &&
+        dateNow.day == today.day) {
+      day = 'hoje';
+    }
+
+    model.add(
+      CalculateData(
+        history: history,
+        day: day[0].toUpperCase() + day.substring(1, day.length),
+        hour: hour,
+      ),
+    );
   }
 }
