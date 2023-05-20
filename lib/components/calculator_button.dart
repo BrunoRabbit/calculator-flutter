@@ -29,7 +29,7 @@ class CalculatorButton extends StatelessWidget {
             ),
           ),
           style: ElevatedButton.styleFrom(
-            primary: color ?? Colors.black,
+            backgroundColor: color ?? Colors.black,
             shape: const RoundedRectangleBorder(),
           ),
           onPressed: onTap,
