@@ -63,22 +63,22 @@ class CalculatorController extends ChangeNotifier {
       newTotal = previousNum * currentNum;
     } else if (_operator == '/') {
       newTotal = previousNum / currentNum;
+    } else if (_operator == '%') {
+      newTotal = (previousNum / 100) * currentNum;
     }
 
     if (newTotal != null) {
       total = newTotal;
       display = total.toString();
 
-      getTimeNow(previousNum, currentNum);
+      _getTimeNow(previousNum, currentNum);
     }
 
     notifyListeners();
   }
 
-  void getTimeNow(double previousNum, double currentNum) {
+  void _getTimeNow(double previousNum, double currentNum) {
     DateTime dateNow = DateTime.now();
-    DateTime today = DateTime.now().toLocal();
-
     DateFormat format = DateFormat('EEEE', 'pt-BR');
 
     String day = format.format(dateNow);
@@ -86,9 +86,7 @@ class CalculatorController extends ChangeNotifier {
 
     String history = '$previousNum $_operator $currentNum =\n $display';
 
-    if (dateNow.year == today.year &&
-        dateNow.month == today.month &&
-        dateNow.day == today.day) {
+    if (_isDateToday(dateNow)) {
       day = 'hoje';
     }
 
@@ -99,5 +97,18 @@ class CalculatorController extends ChangeNotifier {
         hour: hour,
       ),
     );
+  }
+
+  bool _isDateToday(DateTime dateNow) {
+    DateTime today = DateTime.now().toLocal();
+
+    final bool isYearEqual = dateNow.year == today.year;
+    final bool isMonthEqual = dateNow.month == today.month;
+    final bool isDayEqual = dateNow.day == today.day;
+
+    if (isYearEqual && isMonthEqual && isDayEqual) {
+      return true;
+    }
+    return false;
   }
 }
