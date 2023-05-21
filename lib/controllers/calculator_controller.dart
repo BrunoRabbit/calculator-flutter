@@ -44,28 +44,13 @@ class CalculatorController extends ChangeNotifier {
   // Decimal Function(String value) get decimalValue => (String value) {
   //       return Decimal.parse(value);
   //     };
-  Decimal _decimalValue(String value) {
-    return Decimal.parse(value);
-  }
 
   void calculateResult() {
     double currentNum = double.parse(display);
     double previousNum = total;
     double? newTotal;
-    Decimal value;
 
-    if (_operator == '+') {
-      newTotal = previousNum + currentNum;
-    } else if (_operator == '-') {
-      value = _decimalValue('$previousNum') - _decimalValue('$currentNum');
-      newTotal = value.toDouble();
-    } else if (_operator == 'x') {
-      newTotal = previousNum * currentNum;
-    } else if (_operator == '/') {
-      newTotal = previousNum / currentNum;
-    } else if (_operator == '%') {
-      newTotal = (previousNum / 100) * currentNum;
-    }
+    newTotal = _performOperation(previousNum, currentNum);
 
     if (newTotal != null) {
       total = newTotal;
@@ -110,5 +95,29 @@ class CalculatorController extends ChangeNotifier {
       return true;
     }
     return false;
+  }
+
+  double? _performOperation(double previousNum, double currentNum) {
+    Decimal value;
+
+    switch (_operator) {
+      case '+':
+        return previousNum + currentNum;
+      case '-':
+        value = _decimalValue('$previousNum') - _decimalValue('$currentNum');
+        return value.toDouble();
+      case 'x':
+        return previousNum * currentNum;
+      case '/':
+        return previousNum / currentNum;
+      case '%':
+        return (previousNum / 100) * currentNum;
+      default:
+        return null;
+    }
+  }
+
+  Decimal _decimalValue(String value) {
+    return Decimal.parse(value);
   }
 }
