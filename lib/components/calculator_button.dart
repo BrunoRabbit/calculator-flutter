@@ -14,22 +14,26 @@ class CalculatorButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).colorScheme;
+    final size = MediaQuery.of(context).size;
+
     return SizedBox(
-      height: MediaQuery.of(context).size.height / 7.32,
-      width: MediaQuery.of(context).size.width / 4,
+      height: size.height / 7.2,
+      width: size.width / 4,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 3),
         child: ElevatedButton(
           child: Text(
             title,
-            style: const TextStyle(
-              color: Color(0xffFEFEFE),
+            style: TextStyle(
+              color: title == "=" ? theme.secondary : theme.tertiary,
               fontSize: 24,
               fontWeight: FontWeight.bold,
             ),
           ),
           style: ElevatedButton.styleFrom(
-            backgroundColor: color ?? Colors.black,
+            elevation: 4,
+            backgroundColor: color ?? theme.secondary,
             shape: const RoundedRectangleBorder(),
           ),
           onPressed: onTap,

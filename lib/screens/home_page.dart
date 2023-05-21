@@ -11,8 +11,10 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _controller = Provider.of<CalculatorController>(context);
+    final theme = Theme.of(context).colorScheme;
+
     return Scaffold(
-      backgroundColor: const Color(0xff1F1F1F),
+      backgroundColor: theme.background,
       body: SafeArea(
         child: Column(
           children: [
@@ -36,11 +38,11 @@ class HomePage extends StatelessWidget {
                             builder: (context) => const HistoryPage(),
                           ));
                         },
-                        child: const Padding(
-                          padding: EdgeInsets.only(top: 16.0, right: 4),
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 16.0, right: 4),
                           child: Icon(
                             Icons.history,
-                            color: Colors.white,
+                            color: theme.tertiary,
                           ),
                         ),
                       ),
@@ -60,8 +62,8 @@ class HomePage extends StatelessWidget {
                   child: SingleChildScrollView(
                     child: Text(
                       _controller.display,
-                      style: const TextStyle(
-                        color: Colors.white,
+                      style: TextStyle(
+                        color: _contrastColors(theme),
                         fontSize: 50,
                         fontWeight: FontWeight.bold,
                       ),
@@ -75,5 +77,12 @@ class HomePage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Color _contrastColors(ColorScheme theme) {
+    if (theme.brightness == Brightness.light) {
+      return Colors.black;
+    }
+    return Colors.white;
   }
 }

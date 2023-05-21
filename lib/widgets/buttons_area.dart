@@ -13,7 +13,9 @@ class ButtonsArea extends StatefulWidget {
 class _ButtonsAreaState extends State<ButtonsArea> {
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final _controller = Provider.of<CalculatorController>(context);
+    
     return Flexible(
       child: Column(
         children: [
@@ -23,7 +25,7 @@ class _ButtonsAreaState extends State<ButtonsArea> {
               children: [
                 Expanded(
                   child: CalculatorButton(
-                    color: const Color(0xff141414),
+                    color: theme.colorScheme.secondary,
                     title: 'AC',
                     onTap: () {
                       _controller.resetInputs();
@@ -31,14 +33,14 @@ class _ButtonsAreaState extends State<ButtonsArea> {
                   ),
                 ),
                 CalculatorButton(
-                  color: const Color(0xff141414),
+                  color: theme.colorScheme.secondary,
                   title: '%',
                   onTap: () {
                     _controller.addOperator('%');
                   },
                 ),
                 CalculatorButton(
-                  color: const Color(0xff141414),
+                  color: theme.colorScheme.secondary,
                   title: '/',
                   onTap: () {
                     _controller.addOperator('/');
@@ -74,7 +76,7 @@ class _ButtonsAreaState extends State<ButtonsArea> {
                   onTap: () {
                     _controller.addOperator('x');
                   },
-                  color: const Color(0xff141414),
+                  color: theme.colorScheme.secondary,
                 ),
               ],
             ),
@@ -106,7 +108,7 @@ class _ButtonsAreaState extends State<ButtonsArea> {
                   onTap: () {
                     _controller.addOperator('-');
                   },
-                  color: const Color(0xff141414),
+                  color: theme.colorScheme.secondary,
                 ),
               ],
             ),
@@ -138,7 +140,7 @@ class _ButtonsAreaState extends State<ButtonsArea> {
                   onTap: () {
                     _controller.addOperator('+');
                   },
-                  color: const Color(0xff141414),
+                  color: theme.colorScheme.secondary,
                 ),
               ],
             ),
@@ -166,7 +168,7 @@ class _ButtonsAreaState extends State<ButtonsArea> {
                   onTap: () {
                     _controller.calculateResult();
                   },
-                  color: const Color(0xff0370C4),
+                  color: theme.colorScheme.primary,
                 ),
               ],
             ),
