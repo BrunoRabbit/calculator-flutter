@@ -1,4 +1,5 @@
 import 'package:calculator/models/calculate_data.dart';
+import 'package:decimal/decimal.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 
@@ -6,14 +7,12 @@ class CalculatorController extends ChangeNotifier {
   String display = '0';
   double total = 0;
   String? _operator;
-  bool _isOperatorClicked = false;
 
   List<CalculateData> model = <CalculateData>[];
 
   void addNumber(String text) {
-    if (display == '0' || _isOperatorClicked) {
+    if (text != '.' && display == '0') {
       display = text;
-      _isOperatorClicked = false;
     } else {
       display += text;
     }
@@ -27,7 +26,6 @@ class CalculatorController extends ChangeNotifier {
     total = double.parse(display);
     display = '0';
     _operator = operator;
-    _isOperatorClicked = true;
     notifyListeners();
   }
 
@@ -35,30 +33,45 @@ class CalculatorController extends ChangeNotifier {
     display = '0';
     total = 0;
     _operator = null;
-    _isOperatorClicked = false;
+    notifyListeners();
+  }
+
+  void deleteHistory() {
     model.clear();
     notifyListeners();
+  }
+
+  // Decimal Function(String value) get decimalValue => (String value) {
+  //       return Decimal.parse(value);
+  //     };
+  Decimal _decimalValue(String value) {
+    return Decimal.parse(value);
   }
 
   void calculateResult() {
     double currentNum = double.parse(display);
     double previousNum = total;
     double? newTotal;
+    Decimal value;
 
     if (_operator == '+') {
       newTotal = previousNum + currentNum;
     } else if (_operator == '-') {
-      newTotal = previousNum - currentNum;
+      value = _decimalValue('$previousNum') - _decimalValue('$currentNum');
+      newTotal = value.toDouble();
     } else if (_operator == 'x') {
       newTotal = previousNum * currentNum;
     } else if (_operator == '/') {
       newTotal = previousNum / currentNum;
     }
 
-    total = newTotal!;
-    display = total.toString();
+    if (newTotal != null) {
+      total = newTotal;
+      display = total.toString();
 
-    getTimeNow(previousNum, currentNum);
+      getTimeNow(previousNum, currentNum);
+    }
+
     notifyListeners();
   }
 

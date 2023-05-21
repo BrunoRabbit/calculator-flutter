@@ -25,6 +25,17 @@ class HistoryPage extends StatelessWidget {
             Icons.arrow_back,
           ),
         ),
+        actions: [
+          GestureDetector(
+            onTap: () => _controller.deleteHistory(),
+            child: const Padding(
+              padding: EdgeInsets.only(right: 8.0),
+              child: Icon(
+                Icons.delete_forever,
+              ),
+            ),
+          ),
+        ],
       ),
       body: _controller.model.isEmpty
           ? const Padding(

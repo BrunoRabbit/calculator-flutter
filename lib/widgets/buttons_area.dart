@@ -34,14 +34,14 @@ class _ButtonsAreaState extends State<ButtonsArea> {
                   color: const Color(0xff141414),
                   title: '%',
                   onTap: () {
-                    print('%');
+                    _controller.addOperator('%');
                   },
                 ),
                 CalculatorButton(
                   color: const Color(0xff141414),
                   title: '/',
                   onTap: () {
-                    print('/');
+                    _controller.addOperator('/');
                   },
                 ),
               ],
@@ -60,19 +60,19 @@ class _ButtonsAreaState extends State<ButtonsArea> {
                 CalculatorButton(
                   title: '8',
                   onTap: () {
-                    // _controller.addNumber('8');
+                    _controller.addNumber('8');
                   },
                 ),
                 CalculatorButton(
                   title: '9',
                   onTap: () {
-                    print('AC');
+                    _controller.addNumber('9');
                   },
                 ),
                 CalculatorButton(
                   title: 'x',
                   onTap: () {
-                    print('AC');
+                    _controller.addOperator('x');
                   },
                   color: const Color(0xff141414),
                 ),
@@ -86,25 +86,25 @@ class _ButtonsAreaState extends State<ButtonsArea> {
                 CalculatorButton(
                   title: '4',
                   onTap: () {
-                    print('AC');
+                    _controller.addNumber('4');
                   },
                 ),
                 CalculatorButton(
                   title: '5',
                   onTap: () {
-                    print('AC');
+                    _controller.addNumber('5');
                   },
                 ),
                 CalculatorButton(
                   title: '6',
                   onTap: () {
-                    print('AC');
+                    _controller.addNumber('6');
                   },
                 ),
                 CalculatorButton(
                   title: '-',
                   onTap: () {
-                    print('AC');
+                    _controller.addOperator('-');
                   },
                   color: const Color(0xff141414),
                 ),
@@ -118,19 +118,19 @@ class _ButtonsAreaState extends State<ButtonsArea> {
                 CalculatorButton(
                   title: '1',
                   onTap: () {
-                    print('AC');
+                    _controller.addNumber('1');
                   },
                 ),
                 CalculatorButton(
                   title: '2',
                   onTap: () {
-                    print('AC');
+                    _controller.addNumber('2');
                   },
                 ),
                 CalculatorButton(
                   title: '3',
                   onTap: () {
-                    print('AC');
+                    _controller.addNumber('3');
                   },
                 ),
                 CalculatorButton(
@@ -151,14 +151,14 @@ class _ButtonsAreaState extends State<ButtonsArea> {
                   child: CalculatorButton(
                     title: '0',
                     onTap: () {
-                    //  _controller.getResult();
+                      _controller.addNumber('0');
                     },
                   ),
                 ),
                 CalculatorButton(
                   title: ',',
                   onTap: () {
-                    print('AC');
+                    _controller.addNumber('.');
                   },
                 ),
                 CalculatorButton(
