@@ -55,6 +55,7 @@ class CalculatorController extends ChangeNotifier {
     if (newTotal != null) {
       total = newTotal;
       display = total.toString();
+      total = 0;
 
       _getTimeNow(previousNum, currentNum);
     }
