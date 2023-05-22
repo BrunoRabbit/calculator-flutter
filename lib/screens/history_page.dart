@@ -8,38 +8,44 @@ class HistoryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _controller = Provider.of<CalculatorController>(context);
-    const defaultPadding = 12.0;
-    const style = TextStyle(
+    final theme = Theme.of(context).colorScheme;
+
+    const kDefaultPadding = 12.0;
+    final style = TextStyle(
       fontSize: 16,
+      color: theme.tertiary,
       fontWeight: FontWeight.w500,
     );
 
     return Scaffold(
+      backgroundColor: theme.background,
       appBar: AppBar(
-        backgroundColor: const Color(0xff1F1F1F),
+        backgroundColor: theme.secondary,
         leading: GestureDetector(
           onTap: () {
             Navigator.of(context).pop();
           },
-          child: const Icon(
+          child: Icon(
             Icons.arrow_back,
+            color: theme.tertiary,
           ),
         ),
         actions: [
           GestureDetector(
             onTap: () => _controller.deleteHistory(),
-            child: const Padding(
-              padding: EdgeInsets.only(right: 8.0),
+            child: Padding(
+              padding: const EdgeInsets.only(right: 8.0),
               child: Icon(
                 Icons.delete_forever,
+                color: theme.tertiary,
               ),
             ),
           ),
         ],
       ),
       body: _controller.model.isEmpty
-          ? const Padding(
-              padding: EdgeInsets.all(defaultPadding / 1.5),
+          ? Padding(
+              padding: const EdgeInsets.all(kDefaultPadding / 1.5),
               child: Center(
                 child: Text(
                   'Ainda não há histórico',
@@ -48,7 +54,7 @@ class HistoryPage extends StatelessWidget {
               ),
             )
           : Padding(
-              padding: const EdgeInsets.only(top: defaultPadding / 3),
+              padding: const EdgeInsets.only(top: kDefaultPadding / 3),
               child: ListView.builder(
                 itemCount: _controller.model.length,
                 itemBuilder: (context, index) {
@@ -56,18 +62,20 @@ class HistoryPage extends StatelessWidget {
 
                   return Padding(
                     padding: const EdgeInsets.symmetric(
-                      vertical: defaultPadding / 3,
-                      horizontal: defaultPadding / 1.5,
+                      vertical: kDefaultPadding / 3,
+                      horizontal: kDefaultPadding / 1.5,
                     ),
                     child: Container(
                       height: 80,
                       alignment: Alignment.centerRight,
                       decoration: BoxDecoration(
-                        color: Colors.black12,
-                        borderRadius: BorderRadius.circular(defaultPadding),
+                        color: theme.brightness == Brightness.dark
+                            ? theme.secondary.withOpacity(0.4)
+                            : Colors.black12,
+                        borderRadius: BorderRadius.circular(kDefaultPadding),
                       ),
                       child: Padding(
-                        padding: const EdgeInsets.all(defaultPadding),
+                        padding: const EdgeInsets.all(kDefaultPadding),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [

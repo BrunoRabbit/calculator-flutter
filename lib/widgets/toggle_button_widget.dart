@@ -1,5 +1,7 @@
+import 'package:calculator/controllers/theme_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ToggleButtonWidget extends StatefulWidget {
   const ToggleButtonWidget({Key? key}) : super(key: key);
@@ -17,6 +19,7 @@ class _ToggleButtonWidgetState extends State<ToggleButtonWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final _controller = Provider.of<ThemeController>(context);
     return Align(
       alignment: Alignment.topLeft,
       child: Padding(
@@ -28,6 +31,7 @@ class _ToggleButtonWidgetState extends State<ToggleButtonWidget> {
             setState(() {
               segmentedControlGroupValue = int.parse(i.toString());
             });
+            _controller.changeTheme();
           },
         ),
       ),

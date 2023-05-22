@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
+  // ? General Colors
+  // static const Color kAppbarColor = Color(0xFF636366);
+  
   // ? Dark Theme
   static const Color kBackgroundColor = Color(0xff1F1F1F);
   static const Color kNumberOperationColor = Color(0xffFEFEFE);
@@ -12,5 +15,4 @@ class AppColors {
   static const Color kLightBackground = Color(0xffF3F3F3);
   static const Color kLightButtonColor = Color(0xffF9F9F9);
   static const Color kLightTextColor = Color(0xff1A1A1A);
-
 }

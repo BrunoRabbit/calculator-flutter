@@ -2,37 +2,28 @@ import 'package:calculator/utils/colors/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class ActualTheme {
-  // static final
-  ThemeData themeLight = ThemeData(
-    colorScheme: ThemeData().colorScheme.copyWith(
-          primary: AppColors.kLightEqualButton,
-          secondary: AppColors.kLightButtonColor,
-          tertiary: AppColors.kLightTextColor,
-          background: AppColors.kLightBackground,
-          brightness: Brightness.light,
-        ),
+  // ? Light Theme
+  static final ThemeData themeLight = ThemeData.from(
+    colorScheme: _lightColorScheme,
   );
 
-  // static final
-  ThemeData themeDark = ThemeData(
-    colorScheme: ThemeData().colorScheme.copyWith(
-          primary: AppColors.kButtonEqualBackgroundColor,
-          secondary: AppColors.kButtonBackgroundColor,
-          tertiary: AppColors.kNumberOperationColor,
-          background: AppColors.kBackgroundColor,
-          brightness: Brightness.dark,
-        ),
+  static final ColorScheme _lightColorScheme = ThemeData().colorScheme.copyWith(
+        primary: AppColors.kLightEqualButton,
+        secondary: AppColors.kLightButtonColor,
+        tertiary: AppColors.kLightTextColor,
+        background: AppColors.kLightBackground,
+        brightness: Brightness.light,
+      );
 
-    // colorScheme: ColorScheme.fromSwatch(
-    //   accentColor: Colors.yellow,
-    //   backgroundColor: Colors.green,
-    //   cardColor: Colors.brown,
-    //   primaryColorDark: Colors.purple,
-    //   primarySwatch: Colors.red,
-    // ),
-    // primaryColor: Colors.red,
+  // ? Dark Theme
+  static final ThemeData themeDark = ThemeData.from(
+    colorScheme: _darkColorScheme,
   );
-  // primaryColor: AppColors.kButtonEqualBackgroundColor,
-
-  // colorScheme: ColorScheme.dark().copyWith(background: Colors.red),
+  static final ColorScheme _darkColorScheme = ThemeData().colorScheme.copyWith(
+        primary: AppColors.kButtonEqualBackgroundColor,
+        secondary: AppColors.kButtonBackgroundColor,
+        tertiary: AppColors.kNumberOperationColor,
+        background: AppColors.kBackgroundColor,
+        brightness: Brightness.dark,
+      );
 }

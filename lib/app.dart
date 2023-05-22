@@ -1,5 +1,7 @@
 import 'package:calculator/controllers/calculator_controller.dart';
+import 'package:calculator/controllers/theme_controller.dart';
 import 'package:calculator/screens/home_page.dart';
+import 'package:calculator/theme_data.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -18,23 +20,33 @@ class Application extends StatefulWidget {
 class _ApplicationState extends State<Application> {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => CalculatorController(),
-      child: MaterialApp(
-        title: 'Flutter Demo',
-        debugShowCheckedModeBanner: false,
-        localizationsDelegates: const [
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
-        supportedLocales: const [
-          Locale('pt', 'BR'),
-        ],
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<CalculatorController>(
+          create: (context) => CalculatorController(),
         ),
-        home: const HomePage(),
+        ChangeNotifierProvider<ThemeController>(
+          create: (context) => ThemeController(),
+        ),
+      ],
+      child: Consumer<ThemeController>(
+        builder: (context, value, child) {
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            localizationsDelegates: const [
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: const [
+              Locale('pt', 'BR'),
+            ],
+            theme: value.isThemeChanged
+                ? ActualTheme.themeDark
+                : ActualTheme.themeLight,
+            home: const HomePage(),
+          );
+        },
       ),
     );
   }
