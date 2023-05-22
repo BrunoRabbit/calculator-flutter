@@ -87,10 +87,12 @@ class HistoryPage extends StatelessWidget {
                                 Text(model.hour),
                               ],
                             ),
-                            Text(
-                              model.history,
-                              textAlign: TextAlign.end,
-                              style: style,
+                            Flexible(
+                              child: Text(
+                                model.history,
+                                textAlign: TextAlign.end,
+                                style: style,
+                              ),
                             ),
                           ],
                         ),
